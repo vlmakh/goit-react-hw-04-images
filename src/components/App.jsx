@@ -19,9 +19,7 @@ class App extends Component {
     return (
       <>
         <Searchbar />
-        <button type="button" onClick={this.toggleModal}>
-          Test Modal
-        </button>
+        
         <Loader />
         <ImageGallery>
           <ImageGalleryItem />
@@ -34,7 +32,11 @@ class App extends Component {
               alt="test"
             />
           </Modal>
+          
         )}
+        <button type="button" onClick={this.toggleModal}>
+          Test Modal
+        </button>
       </>
     );
   }
