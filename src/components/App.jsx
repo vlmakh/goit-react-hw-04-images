@@ -1,16 +1,19 @@
-import { Component } from 'react';  
-import { Searchbar } from './Searchbar/Searchbar';
+import { Component } from 'react';
+import { Searchbar } from 'components/Searchbar/Searchbar';
+import { ImageGallery } from 'components/ImageGallery/ImageGallery';
 
 class App extends Component {
-  state = {
-      
+  state = {};
+
+  render() {
+    // <ImageGalleryItem>, <Loader>, <Button> и <Modal></Modal>
+    return (
+      <>
+        <Searchbar />
+        <ImageGallery />
+      </>
+    );
   }
-  
-  render() {return (
-    // <ImageGallery>, <ImageGalleryItem>, <Loader>, <Button> и <Modal></Modal>
-    <Searchbar />
-  );}
-  
-};
+}
 
 export { App };

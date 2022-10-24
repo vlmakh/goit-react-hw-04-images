@@ -2,7 +2,7 @@ import css from './Searchbar.module.css';
 
 export const Searchbar = () => {
   return (
-    <header className={css.Searchbar}>
+    <header className={css.searchbar}>
       <form>
         <button type="submit" className={css.button}>
           <span className={css.button__label}>Search</span>
