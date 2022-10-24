@@ -1,6 +1,6 @@
 import css from './Searchbar.module.css';
 
-export const Searchbar = () => {
+const Searchbar = () => {
   return (
     <header className={css.searchbar}>
       <form>
@@ -19,3 +19,5 @@ export const Searchbar = () => {
     </header>
   );
 };
+
+export default Searchbar;
