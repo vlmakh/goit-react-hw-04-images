@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import Searchbar from 'components/Searchbar';
-// import Loader from 'components/Loader';
+import Loader from 'components/Loader';
 import ImageGallery from 'components/ImageGallery';
 import Button from 'components/Button';
 import Modal from 'components/Modal';
@@ -14,40 +14,48 @@ class App extends Component {
   state = {
     showModal: false,
     showLoader: false,
-    showLoadMoreBtn: false,
+    showStartTitle: true,
     images: [],
     page: 1,
-    query: "",
+    query: '',
   };
 
   increasePageNum() {
     this.setState({ page: this.state.page + 1 });
   }
 
-  resetPageNum() {
-    this.setState({ page: 1 });
-  }
+  searchQuery = async newQuery => {
+    if (newQuery.trim() !== this.state.query) {
+      await this.setState({
+        query: newQuery.trim(),
+        page: 1,
+        images: [],
+        showStartTitle: false,
+      });
 
-  searchQuery = (newQuery) => {
-    console.log(newQuery);
-    if (newQuery !== this.state.query) {
-    this.setState({ query: newQuery })
-    this.resetPageNum();
-      this.fetchImages(newQuery);
+      this.fetchImages(this.state.query);
+      this.increasePageNum();
     }
-  }
+  };
+
+  loadMore = () => {
+    this.fetchImages(this.state.query);
+    this.increasePageNum();
+  };
 
   fetchImages = async search => {
-    
+    this.setState({ showLoader: true });
+
     return fetch(
       `${MAIN_URL}&q=${search}&page=${this.state.page}&per_page=${perPage}`
     )
       .then(response => response.json())
       .then(data => {
-        this.increasePageNum();        
+        console.log(data.hits);
         // return data;
         this.setState(prevState => ({
           images: [...prevState.images, ...data.hits],
+          showLoader: false,
         }));
       });
   };
@@ -61,12 +69,12 @@ class App extends Component {
       <>
         <Searchbar onSubmit={this.searchQuery} />
 
-        {this.state.images.length === 0 && <h1>Input what you want to find</h1>}
+        {this.state.showStartTitle && <h1>Input what you want to find</h1>}
 
         <ImageGallery images={this.state.images} />
 
-        {/* {this.state.showLoader && <Loader />} */}
-        {this.state.images.length > 0 && <Button />}
+        {this.state.showLoader && <Loader />}
+        {this.state.images.length > 0 && <Button loadMore={this.loadMore} />}
 
         {this.state.showModal && (
           <Modal onClose={this.toggleModal}>
@@ -77,9 +85,7 @@ class App extends Component {
           </Modal>
         )}
 
-        <button type="button" onClick={this.toggleModal}>
-          Test Modal
-        </button>
+        {/* <button type="button" onClick={this.toggleModal}>Test Modal</button> */}
       </>
     );
   }
