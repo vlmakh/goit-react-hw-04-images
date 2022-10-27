@@ -3,11 +3,7 @@ import Searchbar from 'components/Searchbar';
 import Loader from 'components/Loader';
 import ImageGallery from 'components/ImageGallery';
 import Button from 'components/Button';
-
-const MAIN_URL =
-  'https://pixabay.com/api/?key=29727763-9de4927242ac493db1fc7e125&image_type=photo&orientation=horizontal&safesearch=true';
-
-export const perPage = 6;
+import { fetchImages } from 'services/api';
 
 class App extends Component {
   state = {
@@ -17,53 +13,51 @@ class App extends Component {
     images: [],
     page: 1,
     query: '',
+    totalFound: 0,
   };
 
-  increasePageNum() {
-    this.setState({ page: this.state.page + 1 });
-  }
-
   searchQuery = async newQuery => {
-    if (newQuery.trim() !== this.state.query) {
-      await this.setState({
-        query: newQuery.trim(),
-        page: 1,
-        images: [],
-        showStartTitle: false,
-      });
+    if (newQuery.trim() === '') {
+      return alert('Empty search');
+    }
 
-      this.fetchImages(this.state.query);
-      this.increasePageNum();
+    if (newQuery.trim() !== this.state.query) {
+      this.setState({ showLoader: true, page: 1 });
+
+      const data = await fetchImages(newQuery.trim(), 1);
+
+      if (!data.hits.length) {
+        alert('No images found due to your search inquiry');
+        this.setState({
+          showLoader: false,
+        });
+      } else {
+        this.setState({
+          query: newQuery.trim(),
+          showStartTitle: false,
+          images: [...data.hits],
+          totalFound: data.totalHits,
+          showLoader: false,
+          page: this.state.page + 1,
+        });
+      }
     }
   };
 
-  loadMore = () => {
-    this.fetchImages(this.state.query);
-    this.increasePageNum();
-  };
-
-  fetchImages = async search => {
+  loadMore = async () => {
     this.setState({ showLoader: true });
 
-    return fetch(
-      `${MAIN_URL}&q=${search}&page=${this.state.page}&per_page=${perPage}`
-    )
-      .then(response => response.json())
-      .then(data => {
-        console.log(data)
-        if (data.hits.length === 0) {
-          alert('No images due to your search inquiry');
-        }
-        // return data;
-        this.setState(prevState => ({
-          images: [...prevState.images, ...data.hits],
-          showLoader: false,
-        }));
-      });
+    const data = await fetchImages(this.state.query, this.state.page);
+
+    this.setState(prevState => ({
+      images: [...prevState.images, ...data.hits],
+      showLoader: false,
+      page: this.state.page + 1,
+    }));
   };
 
   render() {
-    const { showStartTitle, showLoader, images } = this.state;
+    const { showStartTitle, showLoader, images, totalFound } = this.state;
 
     return (
       <>
@@ -74,7 +68,9 @@ class App extends Component {
         <ImageGallery images={images} />
 
         {showLoader && <Loader />}
-        {images.length > 0 && <Button loadMore={this.loadMore} />}
+        {images.length > 0 && images.length < totalFound && (
+          <Button loadMore={this.loadMore} />
+        )}
       </>
     );
   }
