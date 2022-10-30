@@ -1,7 +1,7 @@
 import css from './Loader.module.css';
 import { TailSpin } from 'react-loader-spinner';
 
-function Loader() {
+export default function Loader() {
   return (
     <div className={css.loader}>
       <TailSpin
@@ -17,5 +17,3 @@ function Loader() {
     </div>
   );
 }
-
-export default Loader;

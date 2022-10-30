@@ -23,9 +23,7 @@ function App() {
     fetchImages(query, page).then(data => {
       if (!data.hits.length) {
         alert('No images found due to your search inquiry');
-        this.setState({
-          showLoader: false,
-        });
+        setShowLoader(false);;
       } else {
         setStartTitle(false);
         setImages(prevState => {

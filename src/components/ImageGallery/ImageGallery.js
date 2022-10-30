@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import css from './ImageGallery.module.css';
 import ImageItem from 'components/ImageItem/ImageItem';
 
-function ImageGallery({ images }) {
+export default function ImageGallery({ images }) {
   return (
     <ul className={css.gallery}>
       {images.map(image => (
@@ -13,8 +13,6 @@ function ImageGallery({ images }) {
     </ul>
   );
 }
-
-export default ImageGallery;
 
 ImageGallery.propTypes = {
   images: PropTypes.array,

@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 import css from './Searchbar.module.css';
 
-function Searchbar({ onSubmit }) {
+export default function Searchbar({ onSubmit }) {
   const [query, setQuery] = useState('');
 
   const onSearchInput = event => {
@@ -40,8 +40,6 @@ function Searchbar({ onSubmit }) {
     </header>
   );
 }
-
-export default Searchbar;
 
 Searchbar.propTypes = {
   onSubmit: PropTypes.func,
