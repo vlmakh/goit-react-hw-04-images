@@ -16,15 +16,14 @@ class App extends Component {
     totalFound: 0,
   };
 
-  searchQuery = async newQuery => {
-    if (newQuery.trim() === '') {
-      return alert('Empty search');
-    }
+  async componentDidUpdate(_, prevState) {
+    if (
+      prevState.page !== this.state.page ||
+      prevState.query !== this.state.query
+    ) {
+      this.setState({ showLoader: true });
 
-    if (newQuery.trim() !== this.state.query) {
-      this.setState({ showLoader: true, page: 1 });
-
-      const data = await fetchImages(newQuery.trim(), 1);
+      const data = await fetchImages(this.state.query, this.state.page);
 
       if (!data.hits.length) {
         alert('No images found due to your search inquiry');
@@ -32,27 +31,29 @@ class App extends Component {
           showLoader: false,
         });
       } else {
-        this.setState({
-          query: newQuery.trim(),
+        this.setState(prevState => ({
           showStartTitle: false,
-          images: [...data.hits],
+          images: [...prevState.images, ...data.hits],
           totalFound: data.totalHits,
           showLoader: false,
-          page: this.state.page + 1,
-        });
+        }));
       }
+    }
+  }
+
+  searchQuery = newQuery => {
+    if (newQuery.trim() !== this.state.query) {
+      this.setState({
+        page: 1,
+        query: newQuery.trim(),
+        images: [],
+      });
     }
   };
 
-  loadMore = async () => {
-    this.setState({ showLoader: true });
-
-    const data = await fetchImages(this.state.query, this.state.page);
-
+  loadMore = () => {
     this.setState(prevState => ({
-      images: [...prevState.images, ...data.hits],
-      showLoader: false,
-      page: this.state.page + 1,
+      page: prevState.page + 1,
     }));
   };
 
@@ -68,9 +69,14 @@ class App extends Component {
         <ImageGallery images={images} />
 
         {showLoader && <Loader />}
+
         {images.length > 0 && images.length < totalFound && (
           <Button loadMore={this.loadMore} />
         )}
+
+        {/* {images.length > 0 && images.length === totalFound && (
+          <p>No more images found</p>
+        )} */}
       </>
     );
   }
