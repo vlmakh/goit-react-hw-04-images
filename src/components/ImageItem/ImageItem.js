@@ -3,7 +3,7 @@ import { useState } from 'react';
 import css from './ImageItem.module.css';
 import Modal from 'components/Modal';
 
-function ImageItem({ webformatURL, tags, largeImageURL }) {
+function ImageItem({ image }) {
   const [showModal, setShowModal] = useState(false);
 
   const toggleModal = () => {
@@ -13,14 +13,14 @@ function ImageItem({ webformatURL, tags, largeImageURL }) {
   return (
     <>
       <img
-        src={webformatURL}
-        alt={tags}
+        src={image.webformatURL}
+        alt={image.tags}
         className={css.item__img}
-        onClick={this.toggleModal}
+        onClick={toggleModal}
       />
-      {this.state.showModal && (
+      {showModal && (
         <Modal onClose={toggleModal}>
-          <img src={largeImageURL} alt={tags} />
+          <img src={image.largeImageURL} alt={image.tags} />
         </Modal>
       )}
     </>
@@ -34,5 +34,5 @@ ImageItem.propTypes = {
     largeImageURL: PropTypes.string,
     webformatURL: PropTypes.string,
     tags: PropTypes.string,
-  }).isRequired,
+  }),
 };

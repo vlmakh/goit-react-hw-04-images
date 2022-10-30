@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 import css from './Searchbar.module.css';
 
-export function Searchbar({ onSubmit }) {
+function Searchbar({ onSubmit }) {
   const [query, setQuery] = useState('');
 
   const onSearchInput = event => {
