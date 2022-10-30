@@ -16,10 +16,8 @@ class App extends Component {
     totalFound: 0,
   };
 
-  searchQuery = async newQuery => {
-    if (newQuery.trim() === '') {
-      return alert('Empty search');
-    }
+  searchQuery = async newQuery => {  
+    // if (newQuery.trim() === '') {return alert('Empty search');}
 
     if (newQuery.trim() !== this.state.query) {
       this.setState({ showLoader: true, page: 1 });
@@ -43,6 +41,14 @@ class App extends Component {
       }
     }
   };
+
+  // componentDidUpdate(_, prevState) {
+  //   if (prevState.page !== this.state.page || prevState.query !== this.state.query) {
+
+
+
+  //   }
+  // }
 
   loadMore = async () => {
     this.setState({ showLoader: true });

@@ -11,7 +11,7 @@ class Searchbar extends Component {
     this.setState({ [event.currentTarget.name]: event.currentTarget.value });
   };
 
-  startSearch = event => {
+  handleSubmit = event => {
     event.preventDefault();
 
     if (this.state.searchQuery.trim() === '') {
@@ -24,12 +24,8 @@ class Searchbar extends Component {
   render() {
     return (
       <header className={css.searchBar}>
-        <form className={css.searchForm}>
-          <button
-            type="submit"
-            className={css.searchForm__button}
-            onClick={this.startSearch}
-          >
+        <form className={css.searchForm} onSubmit={this.handleSubmit}>
+          <button type="submit" className={css.searchForm__button}>
             <span className={css.searchForm__buttonlabel}></span>
           </button>
 
