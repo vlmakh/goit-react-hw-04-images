@@ -17,13 +17,14 @@ function App() {
     if (query === '') {
       return;
     }
-
+    
     setShowLoader(true);
 
-    fetchImages(query, page).then(data => {
+    try {      
+      fetchImages(query, page).then(data => {
       if (!data.hits.length) {
         alert('No images found due to your search inquiry');
-        setShowLoader(false);;
+        setShowLoader(false);
       } else {
         setStartTitle(false);
         setImages(prevState => {
@@ -33,6 +34,12 @@ function App() {
         setShowLoader(false);
       }
     });
+    }
+    catch (error) {
+      console.log(error);
+    }
+   
+    
   }, [page, query]);
 
   const searchQuery = newQuery => {

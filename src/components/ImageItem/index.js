@@ -1,1 +1,1 @@
-// export { default } from './ImageItem';
+export { default } from './ImageItem';
