@@ -13,7 +13,7 @@ export default function Searchbar({ onSubmit }) {
     event.preventDefault();
 
     if (query.trim() === '') {
-      return alert('Empty query. Please input something for search');
+      return alert('Empty query. Please input something to search');
     }
 
     onSubmit(query);
@@ -42,5 +42,5 @@ export default function Searchbar({ onSubmit }) {
 }
 
 Searchbar.propTypes = {
-  onSubmit: PropTypes.func,
+  onSubmit: PropTypes.func.isRequired,
 };
