@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
-import css from './ImageItem.module.css';
+import css from './ImageGalleryItem.module.css';
 import Modal from 'components/Modal';
 
-export default function ImageItem({ image }) {
+export default function ImageGalleryItem({ image }) {
   const [showModal, setShowModal] = useState(false);
 
   const toggleModal = () => {
@@ -27,7 +27,7 @@ export default function ImageItem({ image }) {
   );
 }
 
-ImageItem.propTypes = {
+ImageGalleryItem.propTypes = {
   image: PropTypes.shape({
     largeImageURL: PropTypes.string,
     webformatURL: PropTypes.string,
