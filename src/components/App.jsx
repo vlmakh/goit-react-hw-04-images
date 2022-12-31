@@ -14,32 +14,29 @@ function App() {
   const [totalFound, setTotalFound] = useState(0);
 
   useEffect(() => {
-    if (query === '') {
+    if (!query) {
       return;
     }
-    
+
     setShowLoader(true);
 
-    try {      
+    try {
       fetchImages(query, page).then(data => {
-      if (!data.hits.length) {
-        alert('No images found due to your search inquiry');
-        setShowLoader(false);
-      } else {
-        setStartTitle(false);
-        setImages(prevState => {
-          return [...prevState, ...data.hits];
-        });
-        setTotalFound(data.totalHits);
-        setShowLoader(false);
-      }
-    });
-    }
-    catch (error) {
+        if (!data.hits.length) {
+          alert('No images found due to your search inquiry');
+          setShowLoader(false);
+        } else {
+          setStartTitle(false);
+          setImages(prevState => {
+            return [...prevState, ...data.hits];
+          });
+          setTotalFound(data.totalHits);
+          setShowLoader(false);
+        }
+      });
+    } catch (error) {
       console.log(error);
     }
-   
-    
   }, [page, query]);
 
   const searchQuery = newQuery => {
@@ -67,10 +64,6 @@ function App() {
       {images.length > 0 && images.length < totalFound && (
         <Button loadMore={loadMore} />
       )}
-
-      {/* {images.length > 0 && images.length === totalFound && (
-          <p>No more images found</p>
-        )} */}
     </>
   );
 }
