@@ -12,6 +12,7 @@ function App() {
   const [page, setPage] = useState(1);
   const [query, setQuery] = useState('');
   const [totalFound, setTotalFound] = useState(0);
+  const [scroll, setScroll] = useState(0);
 
   useEffect(() => {
     if (!query) {
@@ -32,12 +33,23 @@ function App() {
           });
           setTotalFound(data.totalHits);
           setShowLoader(false);
+          setScroll(document.documentElement.scrollHeight);
         }
       });
     } catch (error) {
       console.log(error);
     }
   }, [page, query]);
+
+  useEffect(() => {
+    if (!scroll || page === 1) {
+      return;
+    }
+    window.scrollBy({
+      top: window.innerHeight - 240,
+      behavior: 'smooth',
+    });
+  }, [page, scroll]);
 
   const searchQuery = newQuery => {
     if (newQuery.trim() !== query) {
