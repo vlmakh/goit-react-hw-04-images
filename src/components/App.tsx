@@ -51,7 +51,7 @@ function App() {
     });
   }, [page, scroll]);
 
-  const searchQuery = (newQuery: string) => {
+  const searchQuery = (newQuery: string): void => {
     if (newQuery.trim() !== query) {
       setPage(1);
       setQuery(newQuery.trim());
@@ -59,7 +59,7 @@ function App() {
     }
   };
 
-  const loadMore = () => {
+  const loadMore = (): void => {
     setPage(prevPage => prevPage + 1);
   };
 

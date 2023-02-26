@@ -3,7 +3,7 @@ import css from './ImageGalleryItem.module.css';
 import Modal from 'components/Modal';
 import { ImageType } from 'components/types';
 
-export default function ImageGalleryItem<T extends ImageType>({ image }) {
+export default function ImageGalleryItem({ image }) {
   const [showModal, setShowModal] = useState(false);
 
   const toggleModal = () => {
@@ -26,11 +26,3 @@ export default function ImageGalleryItem<T extends ImageType>({ image }) {
     </>
   );
 }
-
-// ImageGalleryItem.propTypes = {
-//   image: PropTypes.shape({
-//     largeImageURL: PropTypes.string.isRequired,
-//     webformatURL: PropTypes.string.isRequired,
-//     tags: PropTypes.string.isRequired,
-//   }),
-// };
