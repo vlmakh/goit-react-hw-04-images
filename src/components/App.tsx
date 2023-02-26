@@ -28,7 +28,7 @@ function App() {
           setShowLoader(false);
         } else {
           setStartTitle(false);
-          setImages(prevState => {
+          setImages((prevState: any) => {
             return [...prevState, ...data.hits];
           });
           setTotalFound(data.totalHits);
@@ -51,7 +51,7 @@ function App() {
     });
   }, [page, scroll]);
 
-  const searchQuery = newQuery => {
+  const searchQuery = (newQuery: string) => {
     if (newQuery.trim() !== query) {
       setPage(1);
       setQuery(newQuery.trim());

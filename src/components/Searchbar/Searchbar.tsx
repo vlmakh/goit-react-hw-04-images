@@ -1,15 +1,15 @@
-import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { SetStateAction, useState } from 'react';
 import css from './Searchbar.module.css';
+import { OnSumbitType } from 'components/types';
 
-export default function Searchbar({ onSubmit }) {
+export default function Searchbar({ onSubmit }: OnSumbitType) {
   const [query, setQuery] = useState('');
 
-  const onSearchInput = event => {
+  const onSearchInput = (event: { currentTarget: { value: SetStateAction<string>; }; }) => {
     setQuery(event.currentTarget.value);
   };
 
-  const handleSubmit = event => {
+  const handleSubmit = (event: { preventDefault: () => void; }) => {
     event.preventDefault();
 
     if (query.trim() === '') {
@@ -40,7 +40,3 @@ export default function Searchbar({ onSubmit }) {
     </header>
   );
 }
-
-Searchbar.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-};
