@@ -4,8 +4,8 @@ import Modal from 'components/Modal';
 import { ImageType } from 'components/types';
 
 type ImageProps = {
-  image: ImageType
-}
+  image: ImageType;
+};
 
 export default function ImageGalleryItem({ image }: ImageProps) {
   const [showModal, setShowModal] = useState(false);

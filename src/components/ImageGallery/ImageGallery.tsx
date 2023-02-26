@@ -1,5 +1,5 @@
 import css from './ImageGallery.module.css';
-import ImageGalleryItem from 'components/ImageGalleryItem';
+import ImageGalleryItem from 'components/ImageGalleryItem/ImageGalleryItem';
 import { ImagesType } from 'components/types';
 
 export default function ImageGallery({ images }: ImagesType) {

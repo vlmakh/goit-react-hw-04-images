@@ -4,11 +4,12 @@ import Loader from 'components/Loader';
 import ImageGallery from 'components/ImageGallery';
 import Button from 'components/Button';
 import { fetchImages } from 'services/api';
+import { ImageType } from 'components/types';
 
 function App() {
   const [showLoader, setShowLoader] = useState(false);
   const [showStartTitle, setStartTitle] = useState(true);
-  const [images, setImages] = useState([]);
+  const [images, setImages] = useState<never[] | ImageType[]>([]);
   const [page, setPage] = useState(1);
   const [query, setQuery] = useState('');
   const [totalFound, setTotalFound] = useState(0);
@@ -28,7 +29,7 @@ function App() {
           setShowLoader(false);
         } else {
           setStartTitle(false);
-          setImages((prevState: any) => {
+          setImages(prevState => {
             return [...prevState, ...data.hits];
           });
           setTotalFound(data.totalHits);
