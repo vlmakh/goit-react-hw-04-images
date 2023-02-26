@@ -3,7 +3,11 @@ import css from './ImageGalleryItem.module.css';
 import Modal from 'components/Modal';
 import { ImageType } from 'components/types';
 
-export default function ImageGalleryItem({ image }) {
+type ImageProps = {
+  image: ImageType
+}
+
+export default function ImageGalleryItem({ image }: ImageProps) {
   const [showModal, setShowModal] = useState(false);
 
   const toggleModal = () => {
